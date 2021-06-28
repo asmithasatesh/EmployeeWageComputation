@@ -6,7 +6,7 @@ namespace EmployeeWageComputation
     {
         static void Main(string[] args)
         {   
-            int dailyWage,wageperHour=20, hours=8, partTimeHour=4;
+            int dailyWage,wageperHour=20, hours=8, partTimeHour=4,days=20;
             Random random = new Random();
             int Attendance = random.Next(0, 3);
             Console.WriteLine("Random number is :"+ Attendance);
@@ -26,6 +26,9 @@ namespace EmployeeWageComputation
 
             dailyWage = wageperHour * hours*Attendance;
             Console.WriteLine("Employee daily wage for 20/hr is : "+dailyWage);
+            Console.WriteLine("Employee wage for 20 days  is : " + dailyWage*days);
+
+
         }
     }
 }
