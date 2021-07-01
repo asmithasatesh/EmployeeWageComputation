@@ -41,9 +41,6 @@ namespace EmployeeWageComputation
             }
             Console.WriteLine("Employee Monthly wage is : " + dailyWage);
 
-
-
-
         }
     }
 }
