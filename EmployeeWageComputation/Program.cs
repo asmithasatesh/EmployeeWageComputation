@@ -8,11 +8,15 @@ namespace EmployeeWageComputation
         {
             //Local variables
             int employeeState = 1;
+          
+            //local variables
             int dailyWage, wageperHour=20, hours=8;
             Random random = new Random();
-            //Generate random -> (0,1)
+
+            //Call Random to generate (0,1)
             int Attendance = random.Next(0, 2);
             Console.WriteLine("Random number is :"+ Attendance);
+          
             //Check if employee is present
             if (Attendance==employeeState)
             {
@@ -23,6 +27,7 @@ namespace EmployeeWageComputation
                 Console.WriteLine("Employee is Absent \n");
 
             }
+            //Calculate daily wage
             dailyWage = wageperHour * hours*Attendance;
             Console.WriteLine("Employee daily wage for 20/hr is : "+dailyWage);
         }
