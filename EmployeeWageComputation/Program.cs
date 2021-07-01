@@ -5,6 +5,10 @@ namespace EmployeeWageComputation
     class Program
     {
         static void Main(string[] args)
+        {
+            ComputeWage();
+        }
+        static void ComputeWage()
         {   //Local Variables
             int dailyWage=0,totalHour=0,wageperHour=20, hours=8, partTimeHour=4,days=0;
 
