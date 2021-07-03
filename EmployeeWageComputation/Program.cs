@@ -4,71 +4,84 @@ namespace EmployeeWageComputation
 {
     class Program
     {
-        static void Main(string[] args)
+
+
+        public class EmpBuilderWage
         {
-            Console.WriteLine("Welcome to employee wage computation");
 
-            //get input from user
-            Console.WriteLine("Enter Company Name");
-            string company=Console.ReadLine();
-            Console.WriteLine("Enter wage per hour");
-            int wageperHour = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter total number of days");
-            int totalDays = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter maximum hours");
-            int totalHour = Convert.ToInt32(Console.ReadLine());
-            ComputeWage(company, wageperHour, totalDays, totalHour);
+            public const int FULL_TIME = 1;
+            public const int PART_TIME = 2;
+            private int numOfCompany = 0;
+            private CompanyEmpWage[] companyEmpWageArray;
 
 
-        }
-        public static void ComputeWage(string company, int wageperHour, int totalDays, int totalHour)
-        {   //Local Variables
-            int workingDays=0, hours=0,dailyWage=0,totalWage=0,workingHour=0;
-
-            //Generate a random number in range [0,1,2]
-            Random random = new Random();
-
-            //Using Random methoud output to check attendance
-            while (workingDays <= totalDays && hours <= totalHour)
+            public EmpBuilderWage()
             {
-                //Calling the next method in Random Class
-                int Attendance = random.Next(0, 3);
-               // Console.WriteLine("Random number is :" + Attendance);
-                switch (Attendance)
+                this.companyEmpWageArray = new CompanyEmpWage[5];
+            }
+            public void addCompanyEmpWage(string company, int wagePerhour, int maxHoursPerMonth, int maxWorkingDays)
+            {
+                companyEmpWageArray[this.numOfCompany] = new CompanyEmpWage(company, wagePerhour, maxHoursPerMonth, maxWorkingDays);
+                numOfCompany++;
+            }
+            public void ComputeEmpWage()
+            {
+                for (int i = 0; i < numOfCompany; i++)
                 {
-                    case 1:
-                        //Console.WriteLine("Employee is Present \n");
-                        hours = 8;
-                        break;
-                    case 2:
-                       // Console.WriteLine("Parttimer is Present \n");
-                        hours = 4;
-                        break;
-                    default:
-                       // Console.WriteLine("Employee is Absent \n");
-                        break;
-
-                }
-                //Calculation
-                dailyWage = hours * wageperHour;
-                totalWage += dailyWage;
-                workingHour += hours;
-                if (Attendance != 0)
-                {
-                    workingDays++;
+                    companyEmpWageArray[i].setTotalEmpWage(this.ComputeEmpWage(this.companyEmpWageArray[i]));
+                    Console.WriteLine(this.companyEmpWageArray[i].toString());
                 }
             }
-            //Print all Details
-                Console.WriteLine("Company Name:" + company);
-                Console.WriteLine("Working Hours :" + workingHour);
-                Console.WriteLine("Employee Wage Per day :" + dailyWage);
-                Console.WriteLine("Working days in a month :" + workingDays);
-                Console.WriteLine("Employee Wage for 20 working days :" + totalWage);
-                Console.WriteLine("\n");
+            private int ComputeEmpWage(CompanyEmpWage companyEmpWage)
+            {
+                //Console.WriteLine("Welcome to employee wage computation");
+                //Creating a Random Function
+                int empHours = 0, totalEmpHrs = 0, totalWorkingDays = 0;
 
 
+                while (totalEmpHrs <= companyEmpWage.maxHoursPerMonth && totalWorkingDays < companyEmpWage.maxWorkingDays)
+                {
+                    //Calling the next method in Random Class
+                    totalWorkingDays++;
+                    Random r = new Random();
+                    int empAttendance = r.Next(0, 3);
+                    switch (empAttendance)
+                    {
+                        case FULL_TIME:
+                            empHours = 8;
+                            break;
+                        case PART_TIME:
+                            empHours = 4;
+                            break;
+                        default:
+                            empHours = 0;
+                            break;
+                    }
+                    totalEmpHrs += empHours;
+
+                }
+                //Printing total working days and working hours
+                Console.WriteLine("Total number of days worked " + totalWorkingDays + "\nEmployee hours till now : " + totalEmpHrs+"\n");
+                return totalEmpHrs * companyEmpWage.wagePerHour;
+            }
+            static void Main(string[] args)
+            {
+                //get input from user
+                Console.WriteLine("Enter Company Name");
+                string company = Console.ReadLine();
+                Console.WriteLine("Enter wage per hour");
+                int wageperHour = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter total number of days");
+                int totalDays = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter maximum hours");
+                int totalHour = Convert.ToInt32(Console.ReadLine());
+                //Create object to call methods
+                EmpBuilderWage empBuilderWage = new EmpBuilderWage();
+                empBuilderWage.addCompanyEmpWage(company, wageperHour, totalHour, totalDays);
+                empBuilderWage.ComputeEmpWage();
 
 
+            }
         }
     }
 }
