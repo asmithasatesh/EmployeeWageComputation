@@ -4,6 +4,11 @@ namespace EmployeeWageComputation
 {
     class Program
     {
+        public string company;
+        public int wageperHour;
+        public int totalHour;
+        public int totalDays;
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to employee wage computation");
@@ -17,11 +22,20 @@ namespace EmployeeWageComputation
             int totalDays = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter maximum hours");
             int totalHour = Convert.ToInt32(Console.ReadLine());
-            ComputeWage(company, wageperHour, totalDays, totalHour);
+
+            Program companies = new Program(company, wageperHour, totalDays, totalHour);
+            companies.ComputeWage();
 
 
         }
-        public static void ComputeWage(string company, int wageperHour, int totalDays, int totalHour)
+        public Program(string company, int wage_per_hour, int max_working_days, int maxHoursPerMonth)
+        {
+            this.company = company;
+            this.wageperHour = wage_per_hour;
+            this.totalDays = max_working_days;
+            this.totalHour = maxHoursPerMonth;
+        }
+        public void ComputeWage()
         {   //Local Variables
             int workingDays=0, hours=0,dailyWage=0,totalWage=0,workingHour=0;
 
@@ -29,7 +43,7 @@ namespace EmployeeWageComputation
             Random random = new Random();
 
             //Using Random methoud output to check attendance
-            while (workingDays <= totalDays && hours <= totalHour)
+            while (workingDays < totalDays && hours <= totalHour)
             {
                 //Calling the next method in Random Class
                 int Attendance = random.Next(0, 3);
@@ -42,15 +56,18 @@ namespace EmployeeWageComputation
                         break;
                     case 2:
                        // Console.WriteLine("Parttimer is Present \n");
-                        hours = 4;
+                        hours = 4;Attendance = 1;
                         break;
                     default:
-                       // Console.WriteLine("Employee is Absent \n");
+                        // Console.WriteLine("Employee is Absent \n");
+                        hours = 1;
                         break;
 
                 }
+
+
                 //Calculation
-                dailyWage = hours * wageperHour;
+                dailyWage = hours * wageperHour*Attendance;
                 totalWage += dailyWage;
                 workingHour += hours;
                 if (Attendance != 0)
