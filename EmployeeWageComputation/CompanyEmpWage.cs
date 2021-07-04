@@ -14,6 +14,8 @@ namespace EmployeeWageComputation
         public int maxHoursPerMonth;
         public int maxWorkingDays;
         public int totalWage;
+        public int dailyWage=0;
+
 
         public CompanyEmpWage(string company, int wagePerHour, int maxHoursPerMonth, int maxWorkingDays)
         {
@@ -25,7 +27,6 @@ namespace EmployeeWageComputation
         public void setTotalEmpWage(int totalWage)
         {
             this.totalWage = totalWage;
-
         }
 
         public string toString()
