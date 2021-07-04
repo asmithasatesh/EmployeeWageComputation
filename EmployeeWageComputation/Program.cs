@@ -13,7 +13,7 @@ namespace EmployeeWageComputation
         {
             public void AddCompanyEmpWage(string company, int wagePerhour, int maxHoursPerMonth, int maxWorkingDays);
             public void ComputeEmpWage();
-            abstract int ComputeEmpWage(CompanyEmpWage companyEmpWage);
+            public KeyValuePair<int, int> ComputeEmpWage(CompanyEmpWage companyEmpWage);
 
         }
         public class EmpBuilderWage : IEmployeeMethods
@@ -43,11 +43,13 @@ namespace EmployeeWageComputation
             {
                 foreach (CompanyEmpWage company in this.companyEmpWageArray)
                 {
-                    company.setTotalEmpWage(this.ComputeEmpWage(company));
+                    var numbers = this.ComputeEmpWage(company);
+                    company.setTotalEmpWage(numbers.Key, numbers.Value);
+                    Console.WriteLine(company.DailywageCalc());
                     Console.WriteLine(company.toString());
                 }
             }
-            public int ComputeEmpWage(CompanyEmpWage companyEmpWage)
+            public KeyValuePair<int, int> ComputeEmpWage(CompanyEmpWage companyEmpWage)
             {
                 //Console.WriteLine("Welcome to employee wage computation");
                 //Creating a Random Function
@@ -78,8 +80,10 @@ namespace EmployeeWageComputation
                 //Printing total working days and working hours
                 Console.WriteLine("\n---Company {0}---", companyEmpWage.company);
                 Console.WriteLine("Total number of days worked : " + totalWorkingDays + "\nEmployee hours till now : " + totalEmpHrs);
-                companyEmpWage.dailyWage=empHours* companyEmpWage.wagePerHour;
-                return (totalEmpHrs * companyEmpWage.wagePerHour);
+
+                return new KeyValuePair<int, int>(totalEmpHrs * companyEmpWage.wagePerHour, empHours * companyEmpWage.wagePerHour);
+                
+
             }
             static void Main(string[] args)
             {
