@@ -78,7 +78,8 @@ namespace EmployeeWageComputation
                 //Printing total working days and working hours
                 Console.WriteLine("\n---Company {0}---", companyEmpWage.company);
                 Console.WriteLine("Total number of days worked : " + totalWorkingDays + "\nEmployee hours till now : " + totalEmpHrs);
-                return totalEmpHrs * companyEmpWage.wagePerHour;
+                companyEmpWage.dailyWage=empHours* companyEmpWage.wagePerHour;
+                return (totalEmpHrs * companyEmpWage.wagePerHour);
             }
             static void Main(string[] args)
             {
