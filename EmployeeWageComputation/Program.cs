@@ -3,10 +3,16 @@ using System;
 namespace EmployeeWageComputation
 {
     class Program
+
     {
+        public interface IEmployeeMethods
+        {
+            public void AddCompanyEmpWage(string company, int wagePerhour, int maxHoursPerMonth, int maxWorkingDays);
+            public void ComputeEmpWage();
+            abstract int ComputeEmpWage(CompanyEmpWage companyEmpWage);
 
-
-        public class EmpBuilderWage
+        }
+        public class EmpBuilderWage : IEmployeeMethods
         {
 
             public const int FULL_TIME = 1;
@@ -19,7 +25,9 @@ namespace EmployeeWageComputation
             {
                 this.companyEmpWageArray = new CompanyEmpWage[5];
             }
-            public void addCompanyEmpWage(string company, int wagePerhour, int maxHoursPerMonth, int maxWorkingDays)
+
+
+            public void AddCompanyEmpWage(string company, int wagePerhour, int maxHoursPerMonth, int maxWorkingDays)
             {
                 companyEmpWageArray[this.numOfCompany] = new CompanyEmpWage(company, wagePerhour, maxHoursPerMonth, maxWorkingDays);
                 numOfCompany++;
@@ -32,7 +40,7 @@ namespace EmployeeWageComputation
                     Console.WriteLine(this.companyEmpWageArray[i].toString());
                 }
             }
-            private int ComputeEmpWage(CompanyEmpWage companyEmpWage)
+            public int ComputeEmpWage(CompanyEmpWage companyEmpWage)
             {
                 //Console.WriteLine("Welcome to employee wage computation");
                 //Creating a Random Function
@@ -61,7 +69,7 @@ namespace EmployeeWageComputation
 
                 }
                 //Printing total working days and working hours
-                Console.WriteLine("Total number of days worked " + totalWorkingDays + "\nEmployee hours till now : " + totalEmpHrs+"\n");
+                Console.WriteLine("Total number of days worked : " + totalWorkingDays + "\nEmployee hours till now : " + totalEmpHrs+"\n");
                 return totalEmpHrs * companyEmpWage.wagePerHour;
             }
             static void Main(string[] args)
@@ -71,13 +79,13 @@ namespace EmployeeWageComputation
                 string company = Console.ReadLine();
                 Console.WriteLine("Enter wage per hour");
                 int wageperHour = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter total number of days");
+                Console.WriteLine("Enter total number of working days in a month");
                 int totalDays = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter maximum hours");
+                Console.WriteLine("Enter maximum working hours in a month");
                 int totalHour = Convert.ToInt32(Console.ReadLine());
                 //Create object to call methods
                 EmpBuilderWage empBuilderWage = new EmpBuilderWage();
-                empBuilderWage.addCompanyEmpWage(company, wageperHour, totalHour, totalDays);
+                empBuilderWage.AddCompanyEmpWage(company, wageperHour, totalHour, totalDays);
                 empBuilderWage.ComputeEmpWage();
 
 
